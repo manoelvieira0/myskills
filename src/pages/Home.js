@@ -16,7 +16,7 @@ export function Home() {
         const currentHour = new Date().getHours();
         if (currentHour < 12) {
             setGrettings('Good Morning');
-        } else if (currentHour >= 12 && currentHour < 18){
+        } else if (currentHour >= 12 && currentHour < 18) {
             setGrettings('Good Afternoon');
         } else {
             setGrettings('Good Night');
