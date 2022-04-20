@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, Platform, FlatList } from 'react-native'
 import { Button } from "../components/Button";
 import { SkillCard } from "../components/SkillCard";
@@ -6,16 +6,32 @@ import { SkillCard } from "../components/SkillCard";
 export function Home() {
     const [newSkill, setNewSkill] = useState('');
     const [mySkills, setMySkills] = useState([]);
+    const [grettings, setGrettings] = useState('');
 
     function handleAddNewSkill() {
         setMySkills(oldState => [...oldState, newSkill]);
     }
+
+    useEffect(() => {
+        const currentHour = new Date().getHours();
+        if (currentHour < 12) {
+            setGrettings('Good Morning');
+        } else if (currentHour >= 12 && currentHour < 18){
+            setGrettings('Good Afternoon');
+        } else {
+            setGrettings('Good Night');
+        }
+    }, [])
 
     return (
         <View style={styles.container}>
 
             <Text
                 style={styles.title}>Welcome, Manoel
+            </Text>
+
+            <Text style={styles.grettings}>
+                {grettings}
             </Text>
 
             <TextInput
@@ -34,8 +50,8 @@ export function Home() {
             <FlatList
                 data={mySkills}
                 keyExtractor={item => item}
-                renderItem={({item}) => (
-                    <SkillCard skill={item}/>
+                renderItem={({ item }) => (
+                    <SkillCard skill={item} />
                 )}
             />
 
@@ -64,16 +80,7 @@ const styles = StyleSheet.create({
         marginTop: 25,
         borderRadius: 8
     },
-    buttonSkill: {
-        backgroundColor: '#1f1e25',
-        padding: 15,
-        borderRadius: 40,
-        alignItems: 'center',
-        marginVertical: 10
+    grettings: {
+        color: 'white'
     },
-    textSkill: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-    }
 })
